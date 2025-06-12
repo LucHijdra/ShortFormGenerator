@@ -12,7 +12,7 @@ cwd = os.getcwd()
 
 #set up program to work with values in config
 config = {}
-with open(f'{cwd}\config.json','r') as file:
+with open(f'{cwd}/config.json','r') as file:
     config = json.loads(file.read())
 topics = config["topics"]
 print("Using topics:",topics)
@@ -113,10 +113,10 @@ def processClip(clip1, clip2, start_time, end_time, i, path):
     # Overlay the video clips on the background image
     final_clip = CompositeVideoClip([bg_image, clip1_resized.set_position(("center", "top")), clip2_resized.set_position(("center", "bottom"))])
     
-    filename = path.split('\\')[-1].split('.')[0]
+    filename = path.split('/')[-1].split('.')[0]
     caption = f"{filename}_{i}"
-    final_clip.write_videofile(f"{cwd}\\outputs\\{caption}.mp4", codec="libx264", threads=16)
-    print(Fore.GREEN + f"\nVideo editing finished - Saved at {cwd}\\outputs\\{caption}.mp4\n")
+    final_clip.write_videofile(f"{cwd}/outputs/{caption}.mp4", codec="libx264", threads=16)
+    print(Fore.GREEN + f"\nVideo editing finished - Saved at {cwd}/outputs/{caption}.mp4\n")
 
 def editVideo(path):
     print('\nEditing video...')
@@ -146,21 +146,21 @@ def editVideo(path):
     # Overlay the video clips on the background image
     final_clip = CompositeVideoClip([bg_image, clip1_resized.set_position(("center", "top")), clip2_resized.set_position(("center", "bottom"))])
     
-    caption = path.split("\\")[-1].split(".")[0]
-    final_clip.write_videofile(f"{cwd}\outputs\{caption}.mp4", codec="libx264", threads=16)
-    path = f"{cwd}\outputs\{caption}.mp4"
+    caption = path.split("/")[-1].split(".")[0]
+    final_clip.write_videofile(f"{cwd}/outputs/{caption}.mp4", codec="libx264", threads=16)
+    path = f"{cwd}/outputs/{caption}.mp4"
     print(Fore.GREEN + f"\nVideo editing finished - Saved at {path}\n")
 
 #download video at the url selected by find_video
 def downloadVid(url,caption,username):
     try:
-        dl.setName(f"{cwd}\downloads\{caption}.mp4")
+        dl.setName(f"{cwd}/downloads/{caption}.mp4")
 
         tryDownload(url)
 
         print('\nEditing video...')
         # Load videos
-        clip1 = VideoFileClip(f"{cwd}\downloads\{caption}.mp4")
+        clip1 = VideoFileClip(f"{cwd}/downloads/{caption}.mp4")
         clip2 = VideoFileClip(secondary_vid)
 
         # Remove sound from clip2
@@ -186,8 +186,8 @@ def downloadVid(url,caption,username):
         final_clip = CompositeVideoClip([bg_image, clip1_resized.set_position(("center", "top")), clip2_resized.set_position(("center", "bottom"))])
         
         
-        final_clip.write_videofile(f"{cwd}\outputs\{caption}.mp4", codec="libx264", threads=16)
-        path = f"{cwd}\outputs\{caption}.mp4"
+        final_clip.write_videofile(f"{cwd}/outputs/{caption}.mp4", codec="libx264", threads=16)
+        path = f"{cwd}/outputs/{caption}.mp4"
         print(Fore.GREEN + f"\nVideo editing finished - Saved at {path}\n")
         #uploadVid(path,username,caption)
     except Exception as E:
@@ -255,15 +255,15 @@ def main():
                 continue
     elif choice == '2':
         print("Using videos from 'feed' folder")
-        for file in os.listdir(f"{cwd}\\feed"):
+        for file in os.listdir(f"{cwd}/feed"):
             print(f"Processing {file}")
-            editVideo(f"{cwd}\\feed\{file}")
+            editVideo(f"{cwd}/feed/{file}")
     elif choice == '3':
         print("Splitting one video in 'feed' into smaller parts")
         vname = input("\nWhat is the video name, including the extension? (ex: video.mp4) ")
         length = input("\nHow long should each clip be in seconds? (ex: 30) ")
         length = int(length)
-        path = f"{cwd}\\feed\{vname}"
+        path = f"{cwd}/feed/{vname}"
         
         print(f"Processing {vname}")
         editLongVideo(path, length)

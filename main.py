@@ -5,7 +5,7 @@
 import requests,json,time,os, asyncio, random, multiprocessing,colorama
 from tiktok_downloader import downloader
 from TikTokApi import TikTokApi
-from moviepy.editor import VideoFileClip, clips_array, ImageClip, CompositeVideoClip, vfx
+from moviepy import VideoFileClip, clips_array, ImageClip, CompositeVideoClip, vfx
 colorama.init(autoreset=True)
 from colorama import Fore, Back, Style
 cwd = os.getcwd()

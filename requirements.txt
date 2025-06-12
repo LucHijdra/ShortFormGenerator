@@ -1,8 +1,7 @@
 requests
 asyncio
 colorama
-moviepy.editor
+moviepy
 playwright
 TikTokApi
 bs4
-tiktok_downloader
